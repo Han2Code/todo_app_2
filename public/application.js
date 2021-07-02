@@ -8,13 +8,13 @@ function getTask() {
 
 			for (var i = 0; i < responses.length; i++)
 				container.insertAdjacentHTML("afterbegin",
-											"[" + responses[i].id + "]"
-											+ responses[i].task
-											+ "<br />");
+											createResponse(responses[i])
+											);
 		}
 	};
 	xhttp.open("GET","http://localhost:3001/todos", true);
 	xhttp.send();
+	document.getElementById("task_input").value = "";
 }
 
 window.sendForm = function (event) {
@@ -27,14 +27,36 @@ window.sendForm = function (event) {
 
 		container.insertAdjacentHTML(
 			"afterbegin",
-			"[" + response.id + "]: " + response.task + "<br />"
+			createResponse(response)
 			);
 		};
 
 	var formData = new this.FormData(document.getElementById("todo_form"));
 	xhttp.send(formData);
+	document.getElementById("task_input").value =  "";
 
 };
 
+function createResponse(response) {
+	return (
+		`<div class="task" id="${response.id}" onclick="deleteResponse('${response.id}')">` +
+		"[" + 
+		response.id +
+		"]: " + 
+		response.task +
+		"<br />" + 
+		"</div>"
+		);
+}
+
+function deleteResponse(response_id) {
+	var xhttp = new XMLHttpRequest();
+	xhttp.open("DELETE", `http://localhost:3001/todos/${response_id}`, true);
+	xhttp.onload = function () {
+		let target = document.getElementById(response_id);
+		target.parentNode.removeChild(target);
+	};
+	xhttp.send(null);
+}
 
 getTask();
