@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>My TODO list</title>
+</head>
+<body>
+	<h1>Home Page</h1>
+
+	<form accept-charset="utf-8" action="http://localhost:3001/todos" method="POST" id="todo_form">
+		<input type="text" name="todo[task]" value="Example" />
+		<input type="submit" value="Submit" onclick="window.sendForm(event)" />
+	</form>
+
+	<div id="container" style="margin: 2em; border: 2px solid black;"></div>
+
+</body>
+
+<footer>
+	<script type="text/javascript" src="application.js"></script>
+</footer>
+</html>
